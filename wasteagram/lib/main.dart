@@ -1,3 +1,5 @@
+import 'package:wasteagram/components/camera_fab.dart';
+
 import 'exports.dart';
 
 void main() {
@@ -41,13 +43,7 @@ class _WasteagramHomeState extends State<WasteagramHome> {
         title: TitleText(widget.title)
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(cameraRoute);
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.camera_alt),
-      ), 
+      floatingActionButton: BigFAB(cameraRoute), 
     );
   }
 }
