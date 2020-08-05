@@ -96,11 +96,12 @@ class _CameraScreenState extends State<CameraScreen> {
                     onPressed: () async {
                       if(formKey.currentState.validate()) {
                         formKey.currentState.save();
-                        print(wasteDataContainer.toString());
                       }
                       //Firestore.instance.collection('photos').add({
                       //})
+                      Navigator.of(context).pop();
                     },
+                    
                   )
                 ]
               ),
