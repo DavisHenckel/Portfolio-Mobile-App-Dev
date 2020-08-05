@@ -7,3 +7,6 @@ export 'package:wasteagram/theme/text_themes.dart';
 export 'package:location/location.dart';
 //export 'package:http/http.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:validators/validators.dart';
+export 'components/waste_forms.dart';
+export 'models/waste_container.dart';
