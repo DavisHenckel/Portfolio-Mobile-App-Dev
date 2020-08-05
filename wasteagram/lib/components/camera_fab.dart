@@ -12,6 +12,7 @@ class BigFAB extends StatelessWidget {
       height: 70,
       width: 70,
       child: FloatingActionButton(
+        backgroundColor: Colors.green[600],
         onPressed: () {
           Navigator.of(context).pushNamed(routeName);
         },

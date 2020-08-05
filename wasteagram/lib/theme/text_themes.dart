@@ -14,6 +14,7 @@ class TitleText extends StatelessWidget {
         textStyle: Theme.of(context).textTheme.headline4,
         fontSize: 25,
         fontWeight: FontWeight.w400,
+        color: Colors.white
       ),
     );
   }
@@ -32,7 +33,8 @@ class RegularText extends StatelessWidget {
       style: GoogleFonts.openSansCondensed(
         textStyle: Theme.of(context).textTheme.headline4,
         fontSize: 20,
-        fontWeight: FontWeight.bold
+        fontWeight: FontWeight.bold,
+        color: Colors.white
       ),
     );
   }
