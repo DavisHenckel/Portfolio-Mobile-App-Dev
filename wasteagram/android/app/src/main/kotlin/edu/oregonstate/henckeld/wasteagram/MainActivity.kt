@@ -1,4 +1,4 @@
-package com.example.wasteagram
+package edu.oregonstate.henckeld.wasteagram
 
 import io.flutter.embedding.android.FlutterActivity
 

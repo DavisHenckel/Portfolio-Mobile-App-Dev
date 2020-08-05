@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
+import 'package:wasteagram/components/camera_fab.dart';
+
+import 'exports.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,57 +11,42 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Wasteagram',
       theme: ThemeData.dark(),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => WasteagramHome(title: 'Wasteagram',),
+        'camera' : (context) => CameraScreen()
+      }
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class WasteagramHome extends StatefulWidget {
+  WasteagramHome({Key key, this.title}) : super(key: key);
+  
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _WasteagramHomeState createState() => _WasteagramHomeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _WasteagramHomeState extends State<WasteagramHome> {
+  
+  static const cameraRoute = 'camera';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        centerTitle: true,
+        title: TitleText(widget.title)
       ),
-      body: Center(
-        
-        
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), 
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BigFAB(cameraRoute), 
     );
   }
 }
+
+
+//wasteagram-6d3ca

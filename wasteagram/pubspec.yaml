@@ -24,6 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   camera: ^0.5.8+2
+  image_picker: ^0.6.7+4
+  google_fonts: ^1.1.0
+  location: ^3.0.2
+  http: ^0.12.2
+  cloud_firestore: ^0.13.7
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -60,8 +65,8 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+ # fonts:
+ #    - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
