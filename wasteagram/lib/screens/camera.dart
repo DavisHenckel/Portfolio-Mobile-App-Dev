@@ -1,5 +1,7 @@
 import 'package:wasteagram/exports.dart';
 import 'package:path/path.dart' as Path;
+import 'package:geolocator/geolocator.dart' as geoLoc;
+
 class CameraScreen extends StatefulWidget {
 
   @override
@@ -13,7 +15,7 @@ class _CameraScreenState extends State<CameraScreen> {
   final formKey = GlobalKey<FormState>();
   int numWasted;
   WasteDataContainer wasteDataContainer = WasteDataContainer();
-  final snackBar = SnackBar(content: Text('Upload Successful'));
+  Geoflutterfire geo = Geoflutterfire();
 
   void getImageSelectPhoto() async {
     image = File(await ImagePicker().getImage(
@@ -33,16 +35,29 @@ class _CameraScreenState extends State<CameraScreen> {
     });
   }
 
-  Future uploadFile() async {
+  Future uploadFile(WasteDataContainer container) async {
     StorageReference storageReference = FirebaseStorage.instance.ref()
     .child('Photo_Uploads/${Path.basename(image.path)}}');
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
-    storageReference.getDownloadURL().then((fileURL) {    
-     setState(() {    
-       imageURL = fileURL;    
+    storageReference.getDownloadURL().then((imageURL) {    
+     setState(() {        
      });    
    });
+   container.imgURL = imageURL;
+  }
+
+  // void addLocationToUpload(var container) async {
+  //   container.position = await 
+  //   geoLoc.Geolocator().getLastKnownPosition(
+  //     desiredAccuracy: geoLoc.LocationAccuracy.high
+  //   );
+  //   container.longitude = container.position.longitude;
+  //   container.latitude = container.position.latitude;
+  // }
+
+  void addDateToUpload(var container) async {
+    container.date = DateTime.now();
   }
 
   @override
@@ -111,23 +126,38 @@ class _CameraScreenState extends State<CameraScreen> {
                       if(formKey.currentState.validate()) {
                         formKey.currentState.save();
                         Navigator.of(context).pop();
+                        wasteDataContainer.position = await 
+                        geoLoc.Geolocator().getLastKnownPosition(
+                          desiredAccuracy: geoLoc.LocationAccuracy.high
+                        );
+                        GeoFirePoint theLocation = geo.point(
+                          latitude: wasteDataContainer.position.latitude,
+                          longitude: wasteDataContainer.position.longitude);
+                        wasteDataContainer.geo = theLocation;
+                        //addLocationToUpload(wasteDataContainer);
+                        addDateToUpload(wasteDataContainer);
                         
+
                       }
-                      Firestore.instance.collection('waste').add({
-                        'waste': wasteDataContainer.numWasted
+                      StorageReference storageReference = FirebaseStorage.instance.ref()
+                      .child('Photo_Uploads/${Path.basename(image.path)}}');
+                      StorageUploadTask uploadTask = storageReference.putFile(image);
+                      await uploadTask.onComplete;
+                      storageReference.getDownloadURL().then((imageURL) {    
+                      setState(() {        
+                        });    
                       });
-                      // StorageReference storageReference = FirebaseStorage.instance.ref()
-                      //   .child('Photo_Uploads/${Path.basename(image.path)}}');
-                      //   StorageUploadTask uploadTask = storageReference.putFile(image);
-                      //   await uploadTask.onComplete;
-                      //   storageReference.getDownloadURL().then((fileURL) {    
-                      //   setState(() {    
-                      //     imageURL = fileURL;    
-                      //   });    
-                      // });
-                      uploadFile();
+                      wasteDataContainer.imgURL = imageURL;
+                      //uploadFile(wasteDataContainer);
+                      Firestore.instance.collection('waste').add({
+                        'waste': wasteDataContainer.numWasted,
+                        'date': wasteDataContainer.date,
+                        'location': wasteDataContainer.geo.data,
+                        'URL': wasteDataContainer.imgURL
+                      });
                       // Scaffold.of(context).showSnackBar(snackBar);
-                      
+                      // {'latitude' : wasteDataContainer.position.latitude, 
+                      //   'longitude' : wasteDataContainer.position.longitude, },
                     },
                     
                   )

@@ -1,6 +1,7 @@
 export 'screens/camera.dart';
 export 'package:flutter/material.dart';
 export 'dart:io';
+export 'package:flutter/services.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:wasteagram/theme/text_themes.dart';
@@ -11,3 +12,6 @@ export 'package:validators/validators.dart';
 export 'components/waste_forms.dart';
 export 'models/waste_container.dart';
 export 'package:firebase_storage/firebase_storage.dart';
+export 'package:location_platform_interface/location_platform_interface.dart';
+export 'package:geoflutterfire/geoflutterfire.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
