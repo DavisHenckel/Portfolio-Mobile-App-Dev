@@ -56,6 +56,13 @@ class _CameraScreenState extends State<CameraScreen> {
   //   container.latitude = container.position.latitude;
   // }
 
+  GeoFirePoint addGeoPt(wasteDataContainer) {
+    GeoFirePoint temp = geo.point(
+    latitude: wasteDataContainer.position.latitude,
+    longitude: wasteDataContainer.position.longitude);
+    wasteDataContainer.geo = temp;
+  }
+
   void addDateToUpload(var container) async {
     container.date = DateTime.now();
   }
@@ -130,12 +137,9 @@ class _CameraScreenState extends State<CameraScreen> {
                         geoLoc.Geolocator().getLastKnownPosition(
                           desiredAccuracy: geoLoc.LocationAccuracy.high
                         );
-                        GeoFirePoint theLocation = geo.point(
-                          latitude: wasteDataContainer.position.latitude,
-                          longitude: wasteDataContainer.position.longitude);
-                        wasteDataContainer.geo = theLocation;
+                        addGeoPt(wasteDataContainer); //set geopoint
                         //addLocationToUpload(wasteDataContainer);
-                        addDateToUpload(wasteDataContainer);
+                        addDateToUpload(wasteDataContainer); //add date
                         
 
                       }
