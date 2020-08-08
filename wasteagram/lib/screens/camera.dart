@@ -22,7 +22,6 @@ class _CameraScreenState extends State<CameraScreen> {
       source: ImageSource.gallery).then((image) => image.path)
     );
     setState(() {
-      
     });
   }
 
@@ -31,45 +30,60 @@ class _CameraScreenState extends State<CameraScreen> {
       source: ImageSource.camera).then((image) => image.path)
     );
     setState(() {
-      
     });
   }
 
-  Future uploadFile(WasteDataContainer container) async {
+  Future uploadFile() async {
     StorageReference storageReference = FirebaseStorage.instance.ref()
     .child('Photo_Uploads/${Path.basename(image.path)}}');
     StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-    storageReference.getDownloadURL().then((imageURL) {    
-     setState(() {        
-     });    
-   });
-   container.imgURL = imageURL;
+    var downURL = await (await uploadTask.onComplete).ref.getDownloadURL();
+    return wasteDataContainer.imgURL = downURL.toString();
   }
 
-  // void addLocationToUpload(var container) async {
-  //   container.position = await 
-  //   geoLoc.Geolocator().getLastKnownPosition(
-  //     desiredAccuracy: geoLoc.LocationAccuracy.high
-  //   );
-  //   container.longitude = container.position.longitude;
-  //   container.latitude = container.position.latitude;
-  // }
+  void addPosition() async {
+    geoLoc.Position myPos = await 
+    geoLoc.Geolocator().getLastKnownPosition(
+      desiredAccuracy: geoLoc.LocationAccuracy.high
+    );
+    wasteDataContainer.position = myPos;
+  }
 
-  GeoFirePoint addGeoPt(wasteDataContainer) {
+  void addGeoPt() {
     GeoFirePoint temp = geo.point(
     latitude: wasteDataContainer.position.latitude,
     longitude: wasteDataContainer.position.longitude);
     wasteDataContainer.geo = temp;
   }
 
-  void addDateToUpload(var container) async {
-    container.date = DateTime.now();
+  void addDateToUpload() {
+    wasteDataContainer.date = DateTime.now();
   }
+ 
+  void addToDB() async {
+    Firestore.instance.collection('waste').add({
+      'waste': wasteDataContainer.numWasted,
+      'date': wasteDataContainer.date,
+      'location': wasteDataContainer.geo.data,
+      'URL': wasteDataContainer.imgURL
+    });
+  }
+  Future sleep2() { 
+  return new Future.delayed(const Duration(seconds: 2), () => "2");
+  }
+
+  // void addPos() async {
+  //   wasteDataContainer.position = await 
+  //     geoLoc.Geolocator().getLastKnownPosition(
+  //     desiredAccuracy: geoLoc.LocationAccuracy.high
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {
     if (image == null) {
+      // tried to refactor but not working -- return NullImgScaffold(image);
       return Scaffold(
         appBar: AppBar(
           title: TitleText('Wasteagram'),
@@ -133,37 +147,17 @@ class _CameraScreenState extends State<CameraScreen> {
                       if(formKey.currentState.validate()) {
                         formKey.currentState.save();
                         Navigator.of(context).pop();
-                        wasteDataContainer.position = await 
-                        geoLoc.Geolocator().getLastKnownPosition(
-                          desiredAccuracy: geoLoc.LocationAccuracy.high
+                        wasteDataContainer.position = await //This does work of addPos()
+                        geoLoc.Geolocator().getLastKnownPosition( //This does work of addPos()
+                          desiredAccuracy: geoLoc.LocationAccuracy.high //This does work of addPos()
                         );
-                        addGeoPt(wasteDataContainer); //set geopoint
-                        //addLocationToUpload(wasteDataContainer);
-                        addDateToUpload(wasteDataContainer); //add date
-                        
-
+                        uploadFile(); //upload file and get image URL   
+                        //addPos(); 
+                        addGeoPt(); //set geopoint
+                        addDateToUpload(); //add date                       
                       }
-                      StorageReference storageReference = FirebaseStorage.instance.ref()
-                      .child('Photo_Uploads/${Path.basename(image.path)}}');
-                      StorageUploadTask uploadTask = storageReference.putFile(image);
-                      await uploadTask.onComplete;
-                      storageReference.getDownloadURL().then((imageURL) {    
-                      setState(() {        
-                        });    
-                      });
-                      wasteDataContainer.imgURL = imageURL;
-                      //uploadFile(wasteDataContainer);
-                      Firestore.instance.collection('waste').add({
-                        'waste': wasteDataContainer.numWasted,
-                        'date': wasteDataContainer.date,
-                        'location': wasteDataContainer.geo.data,
-                        'URL': wasteDataContainer.imgURL
-                      });
-                      // Scaffold.of(context).showSnackBar(snackBar);
-                      // {'latitude' : wasteDataContainer.position.latitude, 
-                      //   'longitude' : wasteDataContainer.position.longitude, },
+                      addToDB(); //adds fields to firestore db
                     },
-                    
                   )
                 ]
               ),
