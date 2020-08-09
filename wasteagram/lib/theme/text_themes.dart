@@ -39,3 +39,22 @@ class RegularText extends StatelessWidget {
     );
   }
 }
+
+class LargeText extends StatelessWidget {
+  
+  final String text;
+
+  LargeText(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.openSansCondensed(
+        textStyle: Theme.of(context).textTheme.headline4,
+        fontSize: 40,
+        color: Colors.white
+      ),
+    );
+  }
+}

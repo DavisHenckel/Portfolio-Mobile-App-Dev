@@ -127,11 +127,6 @@ class _CameraScreenState extends State<CameraScreen> {
                     padding: EdgeInsets.all(5.0),
                     width: 375,
                     height: 500,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 4,
-                      )),
                     child: Image.file(image)
                     ),
                   SizedBox(height: 30),

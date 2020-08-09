@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'exports.dart';
 import 'package:intl/intl.dart';
 
@@ -17,7 +15,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {  
         '/' : (context) => WasteagramHome(title: 'Wasteagram',),
-        'camera' : (context) => CameraScreen()
+        'camera' : (context) => CameraScreen(),
+        ExtractArgumentsScreen.routeName: (context) => ExtractArgumentsScreen(),
+        // 'waste_entry' : (context) => WasteEntry()
       }
     );
   }
@@ -34,11 +34,10 @@ class WasteagramHome extends StatefulWidget {
 
 class _WasteagramHomeState extends State<WasteagramHome> {
 
-    String readTimestamp(var timestamp) {
+  String interpretTimestamp(var timestamp) {
     var format = new DateFormat('EEE, M/d/y');
     var date = new DateTime.fromMillisecondsSinceEpoch(timestamp);
     var time = format.format(date);
-
     return time;
   }
 
@@ -54,15 +53,20 @@ class _WasteagramHomeState extends State<WasteagramHome> {
       body: StreamBuilder(
         stream: Firestore.instance.collection('waste').snapshots(),
         builder: (content, snapshot) {
-          if(snapshot.hasData && snapshot.data != null) {
+          if(!snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 var item = snapshot.data.documents[index];
-                var date = readTimestamp(item['date'].millisecondsSinceEpoch);
+                var date = interpretTimestamp(item['date'].millisecondsSinceEpoch);
                 return GestureDetector(
                   onTap: () {
-                    
+                    Navigator.pushNamed(context,
+                      ExtractArgumentsScreen.routeName,
+                      arguments: WasteEntry(
+                        date, item['location'], item['URL'], item['waste']
+                      )
+                    );
                   },
                   child: ListTile(
                     title: Text(date),

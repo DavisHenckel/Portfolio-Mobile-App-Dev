@@ -16,3 +16,5 @@ export 'package:location_platform_interface/location_platform_interface.dart';
 export 'package:geoflutterfire/geoflutterfire.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:wasteagram/components/camera_fab.dart';
+export 'screens/waste_entry.dart';
+export 'models/arg_extractor.dart';
