@@ -30,7 +30,7 @@ The functional requirements are:
 * <s>In the New Post screen, tapping the large upload button should cause the List Screen to appear, with the latest post now appearing at the top of the list.</s>
 * <s>In the New Post screen, if the Number of Items field is empty, tapping the upload button should cause a sensible error message to appear.</s>
 
-* In addition to the functional requirements above, your application should meet the following technical requirements:
+* <b><i>In addition to the functional requirements above, your application should meet the following technical requirements:</b></i>
 
 * <s>Use the location, image_picker, cloud_firestore, and firebase_storage packages to meet the functional and technical requirements.</s>
 * <s>Incorporate the use of Firebase Cloud Storage and Firebase Cloud Firestore for storing images and post data.</s>
@@ -41,7 +41,7 @@ The functional requirements are:
 * <s>Each "post" in Firestore should have the following attributes: date, imageURL, quantity, latitude and longitude.</s>
 * <s>The application should incorporate the Semantics widget in multiple places, such as interactive widgets like buttons, to aid accessibility.</s>
 * <s>The codebase should incorporate a model class.</s>
-* The codebase should incorporate a few (two or three) simple unit tests that test the model class.
+* <b><i>The codebase should incorporate a few (two or three) simple unit tests that test the model class.</b></i>
 
 The functional and technical requirements specifically exercise the Exploration content and our module learning outcomes. In addition, here are some optional extra credit requirements that can add up to 5% to your overall class grade:
 
