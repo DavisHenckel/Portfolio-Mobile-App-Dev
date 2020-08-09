@@ -12,6 +12,7 @@ class WasteForm extends StatelessWidget {
     return Container(
       width: 300,
       child: TextFormField(
+        keyboardType: TextInputType.number,
         autofocus: true,
         decoration: InputDecoration(
         labelText: 'Waste', border: OutlineInputBorder()),
