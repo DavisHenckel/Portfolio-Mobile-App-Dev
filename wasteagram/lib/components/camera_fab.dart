@@ -16,7 +16,6 @@ class BigFAB extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(routeName);
         },
-        tooltip: 'Access Camera',
         child: Icon(
           Icons.camera_alt,
           size: 40.0
