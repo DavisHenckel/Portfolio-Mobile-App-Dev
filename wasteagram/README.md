@@ -1,4 +1,3 @@
-<s></s>
 # Wasteagram
 
 The portfolio project for Mobile Software Development
@@ -18,14 +17,14 @@ You have engaged Matthew Peter in a paid contract to develop a functioning versi
 The functional requirements are:
 
 * <s>Display a circular progress indicator when there are no previous posts to display in the List Screen.</s>
-* The List Screen should display a list of all previous posts, with the most recent at the top of the list.
-* Each post in the List Screen should be displayed as a date, representing the date the post was created, and a number, representing the total number of wasted items recorded in the post.
-* Tapping on a post in the List Screen should cause a Detail Screen to appear. The Detail Screen's back button should cause the List Screen to appear.
-* The Detail Screen should display the post's date, photo, number of wasted items, and the latitude and longitude that was recorded as part of the post.
-* The List Screen should display a large button at the center bottom area of the screen.
-* Tapping on the large button enables an employee to capture a photo, or select a photo from the device's photo gallery.
-* After taking a new photo or selecting a photo from the gallery, the New Post screen appears.
-* The New Post screen displays the photo of wasted food, a Number of Items text input field for entering the number of wasted items, and a large upload button for saving the post.
+* <s>The List Screen should display a list of all previous posts, </s> with the most recent at the top of the list.
+* <s>Each post in the List Screen should be displayed as a date, representing the date the post was created, and a number, representing the total number of wasted items recorded in the post.</s>
+* <s>Tapping on a post in the List Screen should cause a Detail Screen to appear. The Detail Screen's back button should cause the List Screen to appear.</s>
+* <s>The Detail Screen should display the post's date, photo, number of wasted items, and the latitude and longitude that was recorded as part of the post.</s>
+* <s>The List Screen should display a large button at the center bottom area of the screen.</s>
+* <s>Tapping on the large button enables an employee to capture a photo, or select a photo from the device's photo gallery.</s>
+* <s>After taking a new photo or selecting a photo from the gallery, the New Post screen appears.</s>
+* <s>The New Post screen displays the photo of wasted food, a Number of Items text input field for entering the number of wasted items, and a large upload button for saving the post.</s>
 * Tapping on the Number of Items text input field should cause the device to display its numeric keypad.
 * In the New Post screen, tapping the back button in the app bar should cause the List Screen to appear.
 * In the New Post screen, tapping the large upload button should cause the List Screen to appear, with the latest post now appearing at the top of the list.
