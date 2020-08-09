@@ -1,16 +1,23 @@
-// import 'package:wasteagram/exports.dart';
+import 'package:wasteagram/exports.dart';
 
-// class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: TitleText(widget.title)
-//       ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//       floatingActionButton: BigFAB(cameraRoute), 
-//     );
-//   }
-// }
+  static const cameraRoute = 'camera';
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: TitleText('Wasteagram')
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BigFAB(HomeScreen.cameraRoute),       
+    );
+  }
+}

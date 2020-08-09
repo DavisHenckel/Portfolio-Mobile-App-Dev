@@ -38,7 +38,7 @@ class _CameraScreenState extends State<CameraScreen> {
     .child('Photo_Uploads/${Path.basename(image.path)}}');
     StorageUploadTask uploadTask = storageReference.putFile(image);
     var downURL = await (await uploadTask.onComplete).ref.getDownloadURL();
-    return wasteDataContainer.imgURL = downURL.toString();
+    wasteDataContainer.imgURL = downURL.toString();
   }
 
   void addPosition() async {
@@ -67,9 +67,6 @@ class _CameraScreenState extends State<CameraScreen> {
       'location': wasteDataContainer.geo.data,
       'URL': wasteDataContainer.imgURL
     });
-  }
-  Future sleep2() { 
-  return new Future.delayed(const Duration(seconds: 2), () => "2");
   }
 
   // void addPos() async {
@@ -151,12 +148,12 @@ class _CameraScreenState extends State<CameraScreen> {
                         geoLoc.Geolocator().getLastKnownPosition( //This does work of addPos()
                           desiredAccuracy: geoLoc.LocationAccuracy.high //This does work of addPos()
                         );
-                        uploadFile(); //upload file and get image URL   
-                        //addPos(); 
+                        await uploadFile(); //upload file and get image URL   
+                        //addPosition(); //doesn't work
                         addGeoPt(); //set geopoint
                         addDateToUpload(); //add date                       
                       }
-                      addToDB(); //adds fields to firestore db
+                      addToDB();
                     },
                   )
                 ]
