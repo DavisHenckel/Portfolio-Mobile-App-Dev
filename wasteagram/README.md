@@ -17,7 +17,7 @@ You have engaged Matthew Peter in a paid contract to develop a functioning versi
 The functional requirements are:
 
 * <s>Display a circular progress indicator when there are no previous posts to display in the List Screen.</s>
-* <s>The List Screen should display a list of all previous posts, </s><b><i>with the most recent at the top of the list.</b></i>
+* <s>The List Screen should display a list of all previous posts, with the most recent at the top of the list.</s>
 * <s>Each post in the List Screen should be displayed as a date, representing the date the post was created, and a number, representing the total number of wasted items recorded in the post.</s>
 * <s>Tapping on a post in the List Screen should cause a Detail Screen to appear. The Detail Screen's back button should cause the List Screen to appear.</s>
 * <s>The Detail Screen should display the post's date, photo, number of wasted items, and the latitude and longitude that was recorded as part of the post.</s>
