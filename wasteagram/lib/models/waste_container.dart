@@ -11,8 +11,4 @@ class WasteDataContainer {
 
 
   WasteDataContainer({this.numWasted = 0, this.date, this.position, this.geo, this.imgURL = ''});
-
-  String toString() {
-    return 'There is $numWasted wasted';
-  }
 }

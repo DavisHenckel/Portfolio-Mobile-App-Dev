@@ -27,7 +27,18 @@ class WasteEntry extends StatelessWidget {
               Container(
                 height: 400,
                 width: 300,
-                child: Image.network(url)
+                child: Image.network(
+                  url,
+                  loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }
+                )
               ),
               SizedBox(height: 20),
               Center(child: LargeText('$numWaste item(s) wasted')),
