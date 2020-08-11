@@ -47,5 +47,5 @@ The functional requirements are:
 
 * The app bar of the List Screen should display the total sum of the number of wasted items in all posts (extra 1% added to class grade)
 * Add integration tests that verify any one particular part of the UX flow (extra 1% added to class grade)
-* Integrate the use of in-app analytics (Analytics) to monitor application usage (extra 1.5% added to class grade)
-* Integrate the use of crash reporting (Sentry or Crashlytics) to record application crashes (extra 1.5% added to class grade)
+* <s>Integrate the use of in-app analytics (Analytics) to monitor application usage (extra 1.5% added to class grade)</s>
+* <s>Integrate the use of crash reporting (Sentry or Crashlytics) to record application crashes (extra 1.5% added to class grade)</s>
