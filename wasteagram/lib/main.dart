@@ -41,6 +41,14 @@ class _WasteagramHomeState extends State<WasteagramHome> {
     return time;
   }
 
+  // void updateWaste(item) {
+  //   setState(() {
+      
+  //   });
+  // }
+  int totalWaste = 0;
+  var db = Firestore.instance.collection('waste');
+
   static const cameraRoute = 'camera';
 
   @override
@@ -48,17 +56,28 @@ class _WasteagramHomeState extends State<WasteagramHome> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: TitleText('Wasteagram')
+        title: TitleText('Wasteagram'),
+        actions: [
+          RegularText(totalWaste.toString())
+        ],
       ),
-      body: StreamBuilder(
-        stream: Firestore.instance.collection('waste').snapshots(),
+      body: 
+      StreamBuilder (
+        stream: db.orderBy('date', descending: true).snapshots(),
         builder: (content, snapshot) {
-          if(!snapshot.hasData) {
+          if (snapshot.hasData) {
+            if (snapshot.data.documents.length == 0) {
+              return Center(child: CircularProgressIndicator());
+            }
+          }
+          if(snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
+                db.orderBy('date');
                 var item = snapshot.data.documents[index];
                 var date = interpretTimestamp(item['date'].millisecondsSinceEpoch);
+                totalWaste += item['waste'];
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context,
@@ -87,8 +106,7 @@ class _WasteagramHomeState extends State<WasteagramHome> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: BigFAB(cameraRoute),  
     );
+    
   }
 }
 
-
-//wasteagram-6d3ca
