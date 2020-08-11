@@ -13,30 +13,16 @@ void main() async {
   
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {
-      // In development mode simply print to console.
       FlutterError.dumpErrorToConsole(details);
       Zone.current.handleUncaughtError(details.exception, details.stack);
-    } else {
-      // In production mode report to the application zone to report to
-      // Crashlytics.
+    } 
+    else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
     }
   };
-
-  bool optIn = true;
-  if (optIn) {
-    await FlutterCrashlytics().initialize();
-    FlutterCrashlytics().setUserInfo('test1', 'test@test.com', 'tester');
-  } else {
-    // In this case Crashlytics won't send any reports.
-    // Usually handling opt in/out is required by the Privacy Regulations
-  }
-
   runZoned<Future<Null>>(() async {
     runApp(MyApp());
   }, onError: (error, stackTrace) async {
-    // Whenever an error occurs, call the `reportCrash` function. This will send
-    // Dart errors to our dev console or Crashlytics depending on the environment.
     debugPrint(error.toString());
     await FlutterCrashlytics().reportCrash(error, stackTrace, forceCrash: true);
   });
@@ -94,9 +80,6 @@ class _WasteagramHomeState extends State<WasteagramHome> {
         ],
       ),
       body: 
-      // SingleChildScrollView(
-      //   child: Column(
-      //     children: [ 
         StreamBuilder (
             stream: db.orderBy('date', descending: true).snapshots(),
             builder: (content, snapshot) {
@@ -114,7 +97,7 @@ class _WasteagramHomeState extends State<WasteagramHome> {
                     var date = interpretTimestamp(item['date'].millisecondsSinceEpoch);
                     try {
                       totalWaste += item['waste'];
-                      //totalWaste += item['date']; Uncomment to make crash and see the data in crashlytics.
+                      //totalWaste += item['date']; //Uncomment to make crash and see the data in crashlytics.
                     }
                     catch (exception) {
                       FlutterCrashlytics().logException(exception, exception.stackTrace);
@@ -145,21 +128,6 @@ class _WasteagramHomeState extends State<WasteagramHome> {
               }
             }
           ),
-          // Center(
-          //   child: RaisedButton(
-          //     onPressed: () {
-          //       try {
-          //         throw new FormatException();
-          //       } catch (exception, stack) {
-          //         debugPrint(exception.toString());
-          //         FlutterCrashlytics().logException(exception, stack);
-          //       }
-          //     },
-          //     child: Text('Manual exception log'),
-          //   ),
-       //   )
-     //   ]),
-     // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: BigFAB(cameraRoute),  
     );
