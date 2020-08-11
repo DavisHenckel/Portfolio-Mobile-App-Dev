@@ -41,7 +41,7 @@ The functional requirements are:
 * <s>Each "post" in Firestore should have the following attributes: date, imageURL, quantity, latitude and longitude.</s>
 * <s>The application should incorporate the Semantics widget in multiple places, such as interactive widgets like buttons, to aid accessibility.</s>
 * <s>The codebase should incorporate a model class.</s>
-* <b><i>The codebase should incorporate a few (two or three) simple unit tests that test the model class.</b></i>
+* <s>The codebase should incorporate a few (two or three) simple unit tests that test the model class. </s>
 
 # The functional and technical requirements specifically exercise the Exploration content and our module learning outcomes. In addition, here are some optional extra credit requirements that can add up to 5% to your overall class grade:
 
