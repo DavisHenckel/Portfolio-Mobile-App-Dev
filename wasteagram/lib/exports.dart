@@ -19,3 +19,7 @@ export 'models/arg_extractor.dart';
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:http/http.dart';
 export 'package:flutter_crashlytics/flutter_crashlytics.dart';
+export 'package:firebase_analytics/firebase_analytics.dart';
+export 'package:firebase_analytics/observer.dart';
+export 'package:progress_dialog/progress_dialog.dart';
+export 'package:firebase_core/firebase_core.dart';
