@@ -1,6 +1,6 @@
 import 'package:wasteagram/exports.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geolocator/geolocator.dart' as geoLoc;
+//import 'package:geolocator/geolocator.dart' as geoLoc;
 
 void compareContainer(container1, correctContainer) {
   expect(container1.date, correctContainer.date);
@@ -13,8 +13,8 @@ void compareContainer(container1, correctContainer) {
 void compareAttributes(container1, List list) {
   expect(container1.date, list[0]);
   expect(container1.numWasted, list[1]);
-  //expect(container1.position, list[2]);
-  //expect(container1.geo, list[3]);
+  //expect(container1.position, list[3]);
+  //expect(container1.geo, list[4]);
   expect(container1.imgURL, list[2]);
 }
 
@@ -44,20 +44,15 @@ void testAssignment() {
     cmpList.add('This is a test String!');
     testVar.date = cmpList[0];
     testVar.numWasted = cmpList[1];
-    //testVar.position = cmpList[2];
-    //testVar.geo = cmpList[3];
+    //testVar.position = cmpList[3];
+    //testVar.geo = cmpList[4];
     testVar.imgURL = cmpList[2];
     compareAttributes(testVar, cmpList);
   });
 }
 
-void testInvalid() {
-  var testVar = WasteDataContainer();
-  expect(testVar.date = 5, throwsException);
-}
 void main () {
   TestWidgetsFlutterBinding.ensureInitialized();
   testInitializer();
   testAssignment();
-  testInvalid();
 }

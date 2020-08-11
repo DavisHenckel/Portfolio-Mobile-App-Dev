@@ -1,8 +1,45 @@
+import 'dart:async';
+import 'package:flutter_crashlytics/flutter_crashlytics.dart';
 import 'exports.dart';
 import 'package:intl/intl.dart';
 
-void main() {
-  runApp(MyApp());
+
+//Main Code taken from https://pub.dev/packages/firebase_crashlytics/example
+//can uncomment out code to make it crash and it will report to my crashlytics.
+void main() async {
+  bool isInDebugMode = false;
+
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (isInDebugMode) {
+      // In development mode simply print to console.
+      FlutterError.dumpErrorToConsole(details);
+      Zone.current.handleUncaughtError(details.exception, details.stack);
+    } else {
+      // In production mode report to the application zone to report to
+      // Crashlytics.
+      Zone.current.handleUncaughtError(details.exception, details.stack);
+    }
+  };
+
+  bool optIn = true;
+  if (optIn) {
+    await FlutterCrashlytics().initialize();
+    FlutterCrashlytics().setUserInfo('test1', 'test@test.com', 'tester');
+  } else {
+    // In this case Crashlytics won't send any reports.
+    // Usually handling opt in/out is required by the Privacy Regulations
+  }
+
+  runZoned<Future<Null>>(() async {
+    runApp(MyApp());
+  }, onError: (error, stackTrace) async {
+    // Whenever an error occurs, call the `reportCrash` function. This will send
+    // Dart errors to our dev console or Crashlytics depending on the environment.
+    debugPrint(error.toString());
+    await FlutterCrashlytics().reportCrash(error, stackTrace, forceCrash: true);
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -41,11 +78,6 @@ class _WasteagramHomeState extends State<WasteagramHome> {
     return time;
   }
 
-  // void updateWaste(item) {
-  //   setState(() {
-      
-  //   });
-  // }
   int totalWaste = 0;
   var db = Firestore.instance.collection('waste');
 
@@ -62,47 +94,72 @@ class _WasteagramHomeState extends State<WasteagramHome> {
         ],
       ),
       body: 
-      StreamBuilder (
-        stream: db.orderBy('date', descending: true).snapshots(),
-        builder: (content, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0) {
-              return Center(child: CircularProgressIndicator());
-            }
-          }
-          if(snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (context, index) {
-                db.orderBy('date');
-                var item = snapshot.data.documents[index];
-                var date = interpretTimestamp(item['date'].millisecondsSinceEpoch);
-                totalWaste += item['waste'];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context,
-                      ExtractArgumentsScreen.routeName,
-                      arguments: WasteEntry(
-                        date, item['location'], item['URL'], item['waste']
-                      )
+      // SingleChildScrollView(
+      //   child: Column(
+      //     children: [ 
+        StreamBuilder (
+            stream: db.orderBy('date', descending: true).snapshots(),
+            builder: (content, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.documents.length == 0) {
+                  return Center(child: CircularProgressIndicator());
+                }
+              }
+              if(snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    db.orderBy('date');
+                    var item = snapshot.data.documents[index];
+                    var date = interpretTimestamp(item['date'].millisecondsSinceEpoch);
+                    try {
+                      totalWaste += item['waste'];
+                      //totalWaste += item['date']; Uncomment to make crash and see the data in crashlytics.
+                    }
+                    catch (exception) {
+                      FlutterCrashlytics().logException(exception, exception.stackTrace);
+                      throw new FormatException();
+                    }
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context,
+                          ExtractArgumentsScreen.routeName,
+                          arguments: WasteEntry(
+                            date, item['location'], item['URL'], item['waste']
+                          )
+                        );
+                      },
+                      child: ListTile(
+                        title: Text(date),
+                        trailing: Text(
+                          item['waste'].toString(),
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ),
                     );
-                  },
-                  child: ListTile(
-                    title: Text(date),
-                    trailing: Text(
-                      item['waste'].toString(),
-                      style: TextStyle(fontSize: 20),
-                    )
-                  ),
+                  }
                 );
               }
-            );
-          }
-          else {
-            return Center(child: CircularProgressIndicator());
-          }
-        }
-      ),
+              else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }
+          ),
+          // Center(
+          //   child: RaisedButton(
+          //     onPressed: () {
+          //       try {
+          //         throw new FormatException();
+          //       } catch (exception, stack) {
+          //         debugPrint(exception.toString());
+          //         FlutterCrashlytics().logException(exception, stack);
+          //       }
+          //     },
+          //     child: Text('Manual exception log'),
+          //   ),
+       //   )
+     //   ]),
+     // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: BigFAB(cameraRoute),  
     );

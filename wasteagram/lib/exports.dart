@@ -16,3 +16,6 @@ export 'package:geoflutterfire/geoflutterfire.dart';
 export 'package:wasteagram/components/camera_fab.dart';
 export 'screens/waste_entry.dart';
 export 'models/arg_extractor.dart';
+export 'package:firebase_crashlytics/firebase_crashlytics.dart';
+export 'package:http/http.dart';
+export 'package:flutter_crashlytics/flutter_crashlytics.dart';

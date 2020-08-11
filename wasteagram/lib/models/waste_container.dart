@@ -11,4 +11,5 @@ class WasteDataContainer {
 
 
   WasteDataContainer({this.numWasted = 0, this.date, this.position, this.geo, this.imgURL = ''});
+  
 }

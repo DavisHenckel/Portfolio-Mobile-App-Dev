@@ -27,6 +27,5 @@ public final class GeneratedPluginRegistrant {
     flutterEngine.getPlugins().add(new com.lyokone.location.LocationPlugin());
     flutterEngine.getPlugins().add(new com.baseflow.location_permissions.LocationPermissionsPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
-      com.ethras.simplepermissions.SimplePermissionsPlugin.registerWith(shimPluginRegistry.registrarFor("com.ethras.simplepermissions.SimplePermissionsPlugin"));
   }
 }
